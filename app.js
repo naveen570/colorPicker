@@ -35,11 +35,16 @@ function randomColors() {
   initialColors = [];
   colorDivs.forEach((div, index) => {
     const colorHeader = div.children[0];
+    const icons = div.querySelectorAll(".controls button");
+
     const randomColor = generateHex();
     initialColors.push(randomColor);
     div.style.backgroundColor = randomColor;
     colorHeader.innerText = randomColor;
     checkContrast(randomColor, colorHeader);
+    for (icon of icons) {
+      checkContrast(randomColor, icon);
+    }
     const colorSliders = div.querySelectorAll(
       '.color-sliders input[type="range"'
     );

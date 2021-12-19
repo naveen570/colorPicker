@@ -78,10 +78,7 @@ path {
   border-radius: 1rem;
   transition: all 180ms cubic-bezier(0.42, -0.05, 0.11, 1.11);
 }
-.btn:hover {
-  color: white;
-  background-color: black;
-}
+
 .hex {
   cursor: pointer;
 }
