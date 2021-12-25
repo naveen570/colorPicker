@@ -164,7 +164,8 @@ input[type="range"] {
 }
 .copy-popup {
   background-color: white;
-  min-width: 35%;
+  width: 70%;
+  max-width: 500px;
   min-height: 30vh;
   display: flex;
   flex-direction: column;
