@@ -5,6 +5,8 @@ const colorSliders = document.querySelectorAll(".color-sliders");
 const currentHexes = document.querySelectorAll("h2");
 const copyContainer = document.querySelector(".copy-container");
 const copyPopup = document.querySelector(".copy-popup");
+const closecolorSliders = document.querySelectorAll(".slider-close");
+const lockBtns = document.querySelectorAll(".color-lock");
 let initialColors;
 //Event Listeners
 generateBtn.addEventListener("click", () => {
@@ -26,6 +28,21 @@ currentHexes.forEach((hex) => {
 copyPopup.addEventListener("transitionend", () => {
   copyContainer.classList.remove("active");
 });
+adjustBtns.forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    openColorSlider(index);
+  });
+});
+closecolorSliders.forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    CloseColorSlider(index);
+  });
+});
+lockBtns.forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+    lockTheColor(index);
+  });
+});
 //functions
 function generateHex() {
   const hexColor = chroma.random();
@@ -36,9 +53,13 @@ function randomColors() {
   colorDivs.forEach((div, index) => {
     const colorHeader = div.children[0];
     const icons = div.querySelectorAll(".controls button");
-
     const randomColor = generateHex();
-    initialColors.push(randomColor);
+    if (div.classList.contains("locked")) {
+      initialColors.push(colorHeader.innerText);
+      return;
+    } else {
+      initialColors.push(randomColor);
+    }
     div.style.backgroundColor = randomColor;
     colorHeader.innerText = randomColor;
     checkContrast(randomColor, colorHeader);
@@ -57,13 +78,6 @@ function randomColors() {
   resetInputs();
 }
 randomColors();
-
-adjustBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const colorSliders = btn.parentElement.parentElement.children[2];
-    colorSliders.classList.toggle("active");
-  });
-});
 
 function checkContrast(color, target) {
   const luminance = chroma(color).luminance();
@@ -116,7 +130,7 @@ function updateUI(index) {
   const icons = activeDiv.querySelectorAll(".controls button");
   hexText.innerText = color.hex();
   checkContrast(color, hexText);
-  for (icon of icons) {
+  for (const icon of icons) {
     checkContrast(color, icon);
   }
 }
@@ -148,4 +162,23 @@ function copyClip(hex) {
   document.execCommand("copy");
   copyContainer.classList.add("active");
   document.body.removeChild(el);
+}
+function openColorSlider(index) {
+  colorSliders[index].classList.toggle("active");
+}
+function CloseColorSlider(index) {
+  colorSliders[index].classList.remove("active");
+}
+function lockTheColor(index) {
+  const activeDiv = colorDivs[index];
+  activeDiv.classList.toggle("locked");
+  if (activeDiv.classList.contains("locked")) {
+    const i = lockBtns[index].querySelector("svg");
+    i.classList.remove("fa-lock-open");
+    i.classList.add("fa-lock");
+  } else {
+    const i = lockBtns[index].querySelector("svg");
+    i.classList.remove("fa-lock");
+    i.classList.add("fa-lock-open");
+  }
 }
