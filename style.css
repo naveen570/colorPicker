@@ -9,10 +9,29 @@ svg,
 path {
   pointer-events: none;
 }
+body {
+  background-image: linear-gradient(
+    45deg,
+    rgb(226, 156, 156),
+    rgb(188, 223, 142),
+    rgb(160, 160, 229),
+    rgb(156, 228, 224),
+    rgb(226, 122, 217),
+    rgb(228, 227, 172),
+    rgb(226, 156, 156),
+    rgb(188, 223, 142),
+    rgb(160, 160, 229),
+    rgb(156, 228, 224),
+    rgb(226, 122, 217),
+    rgb(228, 227, 172)
+  );
+}
 .container {
   font-family: "Mali", cursive;
   max-width: 1440px;
   margin: 0 auto;
+  box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.7);
+  background-color: white;
 }
 .colors {
   display: grid;
@@ -110,7 +129,7 @@ input[type="range"] {
   opacity: 1;
 }
 .close {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   font-size: 1rem;
@@ -149,7 +168,9 @@ input[type="range"] {
 .save-popup {
   position: relative;
 }
-.copy-container {
+.copy-container,
+.save-container,
+.library-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -160,28 +181,98 @@ input[type="range"] {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease-in-out;
   opacity: 0;
 }
-.copy-popup {
+.copy-popup,
+.save-popup,
+.library-popup {
   background-color: white;
   width: 70%;
-  max-width: 500px;
   min-height: 30vh;
+  max-width: 650px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
   border-radius: 2rem;
-  transition: all 0.5s ease-in-out;
+  transition: transform 0.4s ease-in-out;
   transform: translateY(-2rem);
 }
-.copy-popup > * {
-  font-size: clamp(1rem, 2.5vw, 1.7rem);
+.library-popup {
+  border-radius: 0;
 }
-.copy-container.active {
+.popup-title {
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  z-index: 10;
+}
+.copy-container.active,
+.save-container.active,
+.library-container.active {
   opacity: 1;
   pointer-events: all;
 }
-.copy-container.active .copy-popup {
+.copy-container.active .copy-popup,
+.save-container.active .save-popup,
+.library-container.active .library-popup {
   transform: translateY(0);
+}
+.close-save,
+.close-library {
+  margin-right: 0.5rem;
+}
+.save-popup .save-name {
+  padding: 0.7rem 1rem;
+  width: 60%;
+  font-size: 1rem;
+}
+.save-popup .save-submit {
+  padding: 0.8rem 2.5rem;
+  font-size: 1.2rem;
+  color: white;
+  background-color: rgb(40, 36, 65);
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+.library-popup {
+  min-width: 40%;
+  max-height: 50vh;
+  overflow-y: scroll;
+  justify-content: flex-start;
+  padding: 2rem;
+}
+
+.custom-palette {
+  display: flex;
+  align-items: center;
+
+  padding: 2rem;
+  width: 100%;
+}
+.custom-palette + .custom-palette {
+  padding: 2rem;
+}
+.custom-palette h4 {
+  flex: 1;
+  font-size: 1.2rem;
+}
+.preview-colors {
+  display: flex;
+  flex-grow: 1;
+}
+.mini-color {
+  height: 5rem;
+  flex-grow: 1;
+  min-width: 2rem;
+}
+.pick-palette {
+  height: 5rem;
+  font-size: 1.2rem;
+  background-color: rgb(71, 71, 71);
+  color: white;
+  border-radius: 0;
+}
+.pick-palette:hover {
+  background-color: rgb(99, 97, 97);
 }
