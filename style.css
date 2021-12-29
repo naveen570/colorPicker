@@ -39,11 +39,9 @@ body {
   grid-auto-columns: 1fr;
   grid-auto-rows: 50vh;
   grid-template-areas:
-    "one "
-    "two "
-    "three "
-    "four  "
-    "five";
+    "one two "
+    "three four "
+    "five five ";
   min-height: 80vh;
 }
 .color:nth-child(1) {
